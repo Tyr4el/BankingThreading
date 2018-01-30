@@ -1,5 +1,6 @@
 package com.conklin;
 
-public class BankAccount {
-
+public interface BankAccount {
+    void deposit();
+    void withdraw();
 }
