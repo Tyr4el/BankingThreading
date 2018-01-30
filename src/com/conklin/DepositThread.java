@@ -2,6 +2,20 @@ package com.conklin;
 import java.util.Random;
 
 public class DepositThread implements Runnable {
+    private int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    private DepositThread(int id) {
+        this.id = id;
+    }
+
     int rndDeposit = 0;
     private static Random randomGenerator = new Random();
 
