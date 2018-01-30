@@ -8,18 +8,24 @@ public class DepositThread implements Runnable {
     private static Random randomGenerator = new Random();
     private Lock accessLock = new ReentrantLock();
 
-    public int deposit() {
+    public void deposit() {
         rndDeposit = randomGenerator.nextInt(200);
-        return rndDeposit;
+        System.out.println(String.format("Thread deposits $%d", rndDeposit));
+        return;
     }
     public void run() {
         accessLock.lock(); // Attempt to get the lock
 
         try {
+            // Deposit a random amount
             deposit();
+            // Unlock the lock so it can be used again
+            accessLock.unlock();
+            // Notify other threads that the lock is open to be grabbed
             notify();
+            // Sleep for a random amount of time
             Thread.sleep(randomGenerator.nextInt(30));
-        } catch (InterruptedException e) {
+        } catch (InterruptedException e) { // Same catch as from Producer/Consumer problem in class
             e.printStackTrace();
         }
     }
