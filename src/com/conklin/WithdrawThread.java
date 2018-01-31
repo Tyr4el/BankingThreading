@@ -1,5 +1,4 @@
 package com.conklin;
-
 import java.util.Random;
 
 public class WithdrawThread implements Runnable, BankAccount {
