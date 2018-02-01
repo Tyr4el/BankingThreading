@@ -27,10 +27,8 @@ public class BankAccount {
                 currentBalance = currentBalance - amount;
                 System.out.println(String.format("\t\t\t\t\t\t\t\t\t\tThread " + Thread.currentThread().getName() + " withdraws $%d\t" +
                         "\t\t$%d", amount, currentBalance));
-                accessLock.unlock();
                 return true;
             } else {
-                accessLock.unlock();
                 return false;
             }
         } finally {
