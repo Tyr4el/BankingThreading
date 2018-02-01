@@ -9,21 +9,34 @@ public class BankAccount {
 
 
     public void deposit(int amount) {
-        accessLock.lock();
-        currentBalance = currentBalance + amount;
-        accessLock.unlock();
+        try {
+            accessLock.lock();
+            currentBalance = currentBalance + amount;
+            System.out.println(String.format("Thread " + Thread.currentThread().getName() + " deposits $%d\t\t\t\t\t\t\t\t\t" +
+                    "\t\t\t\t$%d", amount, currentBalance ));
+        } finally {
+            accessLock.unlock();
+        }
+
     }
 
     public boolean withdraw(int amount) {
-        accessLock.lock();
-        if (currentBalance >= amount) {
-            currentBalance = currentBalance - amount;
+        try {
+            accessLock.lock();
+            if (currentBalance >= amount) {
+                currentBalance = currentBalance - amount;
+                System.out.println(String.format("\t\t\t\t\t\t\t\t\t\tThread " + Thread.currentThread().getName() + " withdraws $%d\t" +
+                        "\t\t$%d", amount, currentBalance));
+                accessLock.unlock();
+                return true;
+            } else {
+                accessLock.unlock();
+                return false;
+            }
+        } finally {
             accessLock.unlock();
-            return true;
-        } else {
-            accessLock.unlock();
-            return false;
         }
+
     }
 
     public int getCurrentBalance() {
