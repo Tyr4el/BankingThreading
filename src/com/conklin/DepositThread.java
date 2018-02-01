@@ -4,13 +4,10 @@ package com.conklin;
 import java.util.Random;
 
 public class DepositThread implements Runnable {
-    public String id;
-    public BankAccount bankAccount;
+    private String id;
+    private BankAccount bankAccount;
 
     Random randomAmount = new Random();
-
-    int randomDeposit = randomAmount.nextInt(200);
-
 
     public DepositThread(String id, BankAccount bankAccount) {
         this.id = id;
@@ -20,10 +17,15 @@ public class DepositThread implements Runnable {
     public void run() {
         while(true) {
             try {
+                int randomDeposit = randomAmount.nextInt(200);
                 bankAccount.deposit(randomDeposit);
+                System.out.println(String.format("Thread " + this.id + " deposits $%d\t\t\t\t\t\t\t\t\t" +
+                                "\t\t\t\t$%d", randomDeposit, bankAccount.getCurrentBalance()));
                 Thread.sleep(3000);
             } catch (InterruptedException ie) {
                 ie.printStackTrace();
+            } finally {
+                this.notifyAll();
             }
 
         }

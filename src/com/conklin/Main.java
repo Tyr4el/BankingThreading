@@ -6,8 +6,8 @@ public class Main {
         BankAccount bankAccount = new BankAccount();
 
         // Print formatter for headings
-        System.out.printf("%-40s%s\t\t%s\n%-40s%s\t\t%s", "Deposit Threads", "Withdraw Threads", "Balance",
-                "----------------", "----------------", "-------");
+        System.out.printf("%-40s%s\t\t\t\t%s\n%-40s%s\t\t\t\t%s", "Deposit Threads", "Withdraw Threads", "Balance",
+                "----------------", "----------------", "-------\n");
 
         Thread depositThread1 = new Thread(new DepositThread("D1", bankAccount)); // Create thread D1
         Thread depositThread2 = new Thread(new DepositThread("D2", bankAccount)); // Create thread D2
@@ -20,6 +20,18 @@ public class Main {
         Thread withdrawThread4 = new Thread(new WithdrawThread("W4", bankAccount)); // Create thread W4
         Thread withdrawThread5 = new Thread(new WithdrawThread("W5", bankAccount)); // Create thread W5
         Thread withdrawThread6 = new Thread(new WithdrawThread("W6", bankAccount)); // Create thread W6
+
+        depositThread1.start();
+        depositThread2.start();
+        depositThread3.start();
+        depositThread4.start();
+
+        withdrawThread1.start();
+        withdrawThread2.start();
+        withdrawThread3.start();
+        withdrawThread4.start();
+        withdrawThread5.start();
+        withdrawThread6.start();
 
     }
 }
