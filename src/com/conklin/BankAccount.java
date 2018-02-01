@@ -20,9 +20,10 @@ public class BankAccount {
             currentBalance = currentBalance - amount;
             accessLock.unlock();
             return true;
+        } else {
+            accessLock.unlock();
+            return false;
         }
-        accessLock.unlock();
-        return false;
     }
 
     public int getCurrentBalance() {
