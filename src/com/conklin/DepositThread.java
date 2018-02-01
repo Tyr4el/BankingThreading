@@ -17,9 +17,9 @@ public class DepositThread implements Runnable {
     public void run() {
         while(true) {
             try {
-                int randomDeposit = randomAmount.nextInt(200);
+                int randomDeposit = 1 +randomAmount.nextInt(199);
                 bankAccount.deposit(randomDeposit);
-                bankAccount.getCanWithdraw().signalAll();
+                bankAccount.signalAll();
                 Thread.sleep(4000);
             } catch (InterruptedException ie) {
                 ie.printStackTrace();

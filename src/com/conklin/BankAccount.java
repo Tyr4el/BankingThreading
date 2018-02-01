@@ -50,6 +50,15 @@ public class BankAccount {
         }
     }
 
+    public void signalAll() {
+        accessLock.lock();
+        try {
+            canWithdraw.signalAll();
+        } finally {
+            accessLock.unlock();
+        }
+    }
+
     public Condition getCanWithdraw() {
         return canWithdraw;
     }

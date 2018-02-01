@@ -19,13 +19,13 @@ public class WithdrawThread implements Runnable {
     public void run() {
         while(true) {
             try {
-                int randomWithdraw = randomAmount.nextInt(50);
+                int randomWithdraw = 1 + randomAmount.nextInt(49);
                 if (!bankAccount.withdraw(randomWithdraw)) {
                     // Block the thread here
-                    bankAccount.getCanWithdraw().await();
-                    Thread.sleep(3000);
+                    bankAccount.await();
+                    Thread.sleep(500);
                 } else {
-                    Thread.sleep(4000);
+                    Thread.sleep(1000);
                 }
             } catch (InterruptedException ie) {
                 ie.printStackTrace();
