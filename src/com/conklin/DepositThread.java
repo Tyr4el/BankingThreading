@@ -19,9 +19,8 @@ public class DepositThread implements Runnable {
             try {
                 int randomDeposit = randomAmount.nextInt(200);
                 bankAccount.deposit(randomDeposit);
-                //System.out.println(String.format("Thread " + this.id + " deposits $%d\t\t\t\t\t\t\t\t\t" +
-                //                "\t\t\t\t$%d", randomDeposit, bankAccount.getCurrentBalance()));
-                Thread.sleep(3000);
+                bankAccount.getCanWithdraw().signalAll();
+                Thread.sleep(4000);
             } catch (InterruptedException ie) {
                 ie.printStackTrace();
             }

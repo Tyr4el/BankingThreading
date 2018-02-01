@@ -2,6 +2,7 @@ package com.conklin;
 
 
 import java.util.Random;
+import java.util.concurrent.locks.Condition;
 
 public class WithdrawThread implements Runnable {
     private String id;
@@ -19,17 +20,12 @@ public class WithdrawThread implements Runnable {
         while(true) {
             try {
                 int randomWithdraw = randomAmount.nextInt(50);
-                int randomSleep = randomAmount.nextInt(5000);
                 if (!bankAccount.withdraw(randomWithdraw)) {
-                    System.out.println(String.format("\t\t\t\t\t\t\t\t\t\tThread " + this.id + " withdraws $%d Withdrawal " +
-                            "- Blocked - Insufficient Funds", randomWithdraw)); // Print a message saying that it failed
                     // Block the thread here
-                    Thread.sleep(randomSleep);
+                    bankAccount.getCanWithdraw().await();
+                    Thread.sleep(3000);
                 } else {
-                    bankAccount.withdraw(randomWithdraw);
-                    System.out.println(String.format("\t\t\t\t\t\t\t\t\t\tThread " + this.id + " withdraws $%d\t" +
-                            "\t\t$%d", randomWithdraw, bankAccount.getCurrentBalance()));
-                    Thread.sleep(randomSleep);
+                    Thread.sleep(4000);
                 }
             } catch (InterruptedException ie) {
                 ie.printStackTrace();
